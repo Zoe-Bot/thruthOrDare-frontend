@@ -38,20 +38,18 @@ const BrowsePage: React.FC = () => {
             <IonSpinner color="primary" />
           </div>
           :
-          <IonList>
-            {state.categories.map((categorie: any) => (
-              <div key={categorie._id}>
-                <IonListHeader>
-                  <IonLabel>{categorie.name}</IonLabel>
-                </IonListHeader>
-                {categorie.set.map((set: any) => (
-                  <IonItem routerLink={'set/' + set._id} key={set._id}>
-                    <IonLabel>{set.name}</IonLabel>
-                    <IonNote slot="end">{set.likes}</IonNote>
-                  </IonItem>))}
-              </div>
-            ))}
-          </IonList>
+          state.categories.map((categorie: any) => (
+            <IonList key={categorie._id}>
+              <IonListHeader>
+                <IonLabel>{categorie.name}</IonLabel>
+              </IonListHeader>
+              {categorie.set.map((set: any) => (
+                <IonItem routerLink={'set/' + set._id} key={set._id}>
+                  <IonLabel>{set.name}</IonLabel>
+                  <IonNote slot="end">{set.likes}</IonNote>
+                </IonItem>))}
+            </IonList>
+          ))
         }
         <IonList>
           <IonListHeader>

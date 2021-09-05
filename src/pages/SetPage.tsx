@@ -24,6 +24,7 @@ const SetPage: React.FC = (props: any) => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        <p>taskList.length: {state.set?.taskList.length}</p>
         <IonList>
           {state.isLoading ?
             (<div className="ion-text-center ion-padding">
@@ -31,7 +32,7 @@ const SetPage: React.FC = (props: any) => {
             </div>) :
             (state.set.taskList.map((task: any, key: number) => (
             <IonItem key={key}>
-                <IonLabel>{task.content.message}</IonLabel>
+                <IonLabel>{key}: {task.content.message}</IonLabel>
               </IonItem>)))
           }
         </IonList>
