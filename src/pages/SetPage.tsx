@@ -1,5 +1,6 @@
 import { IonBackButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonSpinner, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import { useState } from 'react';
+import EmptyStateComponent from '../components/EmptyStateComponent';
 import { getSetById } from '../services/api';
 import { replaceWithIcon } from '../services/replaceGender';
 
@@ -34,10 +35,13 @@ const SetPage: React.FC = (props: any) => {
             (<div className="ion-text-center ion-padding">
               <IonSpinner color="primary" />
             </div>) :
-            (state.set.taskList.map((task: any, key: number) => (
+            state.set.taskList.length == 0 ?
+              <EmptyStateComponent text={"No Tasks yet"}></EmptyStateComponent>
+            :
+            state.set.taskList.map((task: any, key: number) => (
             <IonItem key={key}>
                 <IonLabel>{key}: {task.content.message}</IonLabel>
-              </IonItem>)))
+              </IonItem>))
           }
         </IonList>
       </IonContent>

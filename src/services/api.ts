@@ -677,7 +677,7 @@ export async function getSetById(id: any): Promise<any> {
         "updatedAt": "2021-09-05T07:36:25.595Z",
         "__v": 0
       },
-      
+
       {
         "status": "active",
         "difference": 0,

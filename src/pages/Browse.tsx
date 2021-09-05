@@ -1,6 +1,7 @@
 import { RefresherEventDetail } from '@ionic/core';
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonListHeader, IonNote, IonPage, IonRefresher, IonRefresherContent, IonSpinner, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import { useState } from 'react';
+import EmptyStateComponent from '../components/EmptyStateComponent';
 import { getCategories, getSets } from '../services/api';
 
 const BrowsePage: React.FC = () => {
@@ -43,11 +44,14 @@ const BrowsePage: React.FC = () => {
               <IonListHeader>
                 <IonLabel>{categorie.name}</IonLabel>
               </IonListHeader>
-              {categorie.set.map((set: any) => (
-                <IonItem routerLink={'set/' + set._id} key={set._id}>
-                  <IonLabel>{set.name}</IonLabel>
-                  <IonNote slot="end">{set.likes}</IonNote>
-                </IonItem>))}
+              {categorie.set.length == 0 ?
+                <EmptyStateComponent text={"No Sets yet"}></EmptyStateComponent>
+                :
+                categorie.set.map((set: any) => (
+                  <IonItem routerLink={'set/' + set._id} key={set._id}>
+                    <IonLabel>{set.name}</IonLabel>
+                    <IonNote slot="end">{set.likes}</IonNote>
+                  </IonItem>))}
             </IonList>
           ))
         }
@@ -60,11 +64,14 @@ const BrowsePage: React.FC = () => {
               <IonSpinner color="primary" />
             </div>
             :
-            state.sets.items.map((set: any) => (
-              <IonItem routerLink={'set/' + set._id} key={set._id}>
-                <IonLabel>{set.name}</IonLabel>
-                <IonNote slot="end">{set.likes}</IonNote>
-              </IonItem>))
+            state.sets.items.length == 0 ?
+              <EmptyStateComponent text={"No Sets yet"}></EmptyStateComponent>
+              :
+              state.sets.items.map((set: any) => (
+                <IonItem routerLink={'set/' + set._id} key={set._id}>
+                  <IonLabel>{set.name}</IonLabel>
+                  <IonNote slot="end">{set.likes}</IonNote>
+                </IonItem>))
           }
         </IonList>
       </IonContent>
