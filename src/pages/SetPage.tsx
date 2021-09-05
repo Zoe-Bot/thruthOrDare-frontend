@@ -10,6 +10,7 @@ const SetPage: React.FC = (props: any) => {
     const setId = props.match.params.setId
     const result = await getSetById(setId)
     replaceWithIcon(result.taskList)
+    
     setState({ isLoading: false, set: result })
   })
 
