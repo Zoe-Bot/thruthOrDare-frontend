@@ -1,10 +1,9 @@
-import './ExploreContainer.css';
-
 interface ContainerProps {
-  name: string;
+  name: string
+  set: any
 }
 
-const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
+const SetCard: React.FC<ContainerProps> = ({ name, set }) => {
   return (
     <div className="container">
       <strong>{name}</strong>
@@ -13,4 +12,4 @@ const ExploreContainer: React.FC<ContainerProps> = ({ name }) => {
   );
 };
 
-export default ExploreContainer;
+export default SetCard;
