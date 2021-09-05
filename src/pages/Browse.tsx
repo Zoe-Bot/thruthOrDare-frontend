@@ -1,23 +1,23 @@
 import { RefresherEventDetail } from '@ionic/core';
-import { IonButton, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonNote, IonPage, IonRefresher, IonRefresherContent, IonSpinner, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
-import { closeCircle } from 'ionicons/icons';
+import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonListHeader, IonNote, IonPage, IonRefresher, IonRefresherContent, IonSpinner, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getSets } from '../services/api';
+import { getCategories, getSets } from '../services/api';
 
 const BrowsePage: React.FC = () => {
-  const [state, setState] = useState<any>({ isLoading: true, sets: null })
+  const [state, setState] = useState<any>({ categories: null, sets: null })
 
   useIonViewDidEnter(async () => {
-    const result = await getSets()
+    const setResult = await getSets()
+    const categoryResult = await getCategories()
 
-    setState({ isLoading: false, sets: result })
+    setState({ categories: categoryResult, sets: setResult })
   })
 
   const doRefresh = async (event: CustomEvent<RefresherEventDetail>) => {
-    const result = await getSets()
+    const setResult = await getSets()
+    const categoryResult = await getCategories()
 
-    setState({ sets: result })
+    setState({ categories: categoryResult, sets: setResult })
 
     event.detail.complete()
   }
@@ -26,28 +26,47 @@ const BrowsePage: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Hello</IonTitle>
+          <IonTitle>Browse</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
           <IonRefresherContent></IonRefresherContent>
         </IonRefresher>
+        {state.categories == null ?
+          <div className="ion-text-center ion-padding">
+            <IonSpinner color="primary" />
+          </div>
+          :
+          <IonList>
+            {state.categories.map((categorie: any) => (
+              <div key={categorie._id}>
+                <IonListHeader>
+                  <IonLabel>{categorie.name}</IonLabel>
+                </IonListHeader>
+                {categorie.set.map((set: any) => (
+                  <IonItem routerLink={'set/' + set._id} key={set._id}>
+                    <IonLabel>{set.name}</IonLabel>
+                    <IonNote slot="end">{set.likes}</IonNote>
+                  </IonItem>))}
+              </div>
+            ))}
+          </IonList>
+        }
         <IonList>
-          <IonListHeader lines="inset">
-            <IonLabel>New This Week</IonLabel>
+          <IonListHeader>
+            <IonLabel>All Sets</IonLabel>
           </IonListHeader>
-          {state.isLoading ?
-            (<div className="ion-text-center ion-padding">
+          {state.sets == null ?
+            <div className="ion-text-center ion-padding">
               <IonSpinner color="primary" />
-            </div>) :
-            (state.sets.map((set: any, key: number) => (
-              
-                <IonItem routerLink={'set/' + set._id} key={set._id}>
-                  <IonLabel>{set.name}</IonLabel>
-                  <IonNote slot="end">{set.likes}</IonNote>
-                </IonItem>
-            )))
+            </div>
+            :
+            state.sets.items.map((set: any) => (
+              <IonItem routerLink={'set/' + set._id} key={set._id}>
+                <IonLabel>{set.name}</IonLabel>
+                <IonNote slot="end">{set.likes}</IonNote>
+              </IonItem>))
           }
         </IonList>
       </IonContent>
