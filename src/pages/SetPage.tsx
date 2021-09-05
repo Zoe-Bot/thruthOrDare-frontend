@@ -24,6 +24,9 @@ const SetPage: React.FC = (props: any) => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+      <p>set.truthCount: {state.set?.truthCount}</p>
+      <p>set.daresCount: {state.set?.daresCount}</p>
+      <p>set total count: {state.set?.daresCount + state.set?.truthCount}</p>
         <p>taskList.length: {state.set?.taskList.length}</p>
         <IonList>
           {state.isLoading ?
