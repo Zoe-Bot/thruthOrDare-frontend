@@ -1,7 +1,10 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useContext } from 'react';
 import ExploreContainer from '../components/SetCard';
+import { AppContext } from '../state_management/State';
 
 const Tab3: React.FC = () => {
+  const { state }: any = useContext(AppContext)
   return (
     <IonPage>
       <IonHeader>
@@ -10,11 +13,7 @@ const Tab3: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 3</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+        <h1>{state.count}</h1>
       </IonContent>
     </IonPage>
   );

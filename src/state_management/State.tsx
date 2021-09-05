@@ -1,13 +1,15 @@
-import { createContext, useReducer } from "react";
+import React, { createContext, useEffect, useReducer, useState } from "react";
 
 //@ts-ignore
-const AppContext = createContext()
+let AppContext = createContext()
 
 const initialState = {
     count: 0
 }
 
-const reducer = (state: any, action: any) => {
+const persistedState = JSON.parse(window.localStorage.getItem("state") as any)
+
+let reducer = (state: any, action: any) => {
     switch(action.type) {
         case "setCount": {
             return {...state, count: action.count}
@@ -18,17 +20,23 @@ const reducer = (state: any, action: any) => {
 
 function AppContextProvider(props: any) {
     const fullInitialState = {
-        ...initialState
+        ...initialState,
+        ...persistedState
     }
 
-    const [state, dispatch] = useReducer(reducer, fullInitialState)
-    const value = { state, dispatch }
+    let [state, dispatch] = useReducer(reducer, fullInitialState)
+    
+    useEffect(() => {
+        window.localStorage.setItem('state', JSON.stringify(state))
+    }, [state])
+    
+    let value = { state, dispatch }
 
     return (
         <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
     )
 }
 
-const AppContextConsumer = AppContext.Consumer
+let AppContextConsumer = AppContext.Consumer
 
 export { AppContext, AppContextProvider, AppContextConsumer }
