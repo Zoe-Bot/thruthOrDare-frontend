@@ -11,7 +11,7 @@ const SetPage: React.FC = (props: any) => {
     const setId = props.match.params.setId
     const result = await getSetById(setId)
     replaceWithIcon(result.taskList)
-    
+
     setState({ isLoading: false, set: result })
   })
 
@@ -19,16 +19,16 @@ const SetPage: React.FC = (props: any) => {
     <IonPage>
       <IonHeader translucent>
         <IonToolbar>
-            <IonButtons slot="start">
-                <IonBackButton defaultHref="/browse"></IonBackButton>
-            </IonButtons>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/browse"></IonBackButton>
+          </IonButtons>
           <IonTitle>{state.set?.name ?? ''}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-      <p>set.truthCount: {state.set?.truthCount}</p>
-      <p>set.daresCount: {state.set?.daresCount}</p>
-      <p>set total count: {state.set?.daresCount + state.set?.truthCount}</p>
+        <p>set.truthCount: {state.set?.truthCount}</p>
+        <p>set.daresCount: {state.set?.daresCount}</p>
+        <p>set total count: {state.set?.daresCount + state.set?.truthCount}</p>
         <p>taskList.length: {state.set?.taskList.length}</p>
         <IonList>
           {state.isLoading ?
@@ -37,11 +37,11 @@ const SetPage: React.FC = (props: any) => {
             </div>) :
             state.set.taskList.length == 0 ?
               <EmptyStateComponent text={"No Tasks yet"}></EmptyStateComponent>
-            :
-            state.set.taskList.map((task: any, key: number) => (
-            <IonItem key={key}>
-                <IonLabel>{key}: {task.content.message}</IonLabel>
-              </IonItem>))
+              :
+              state.set.taskList.map((task: any, key: number) => (
+                <IonItem key={key}>
+                  <IonLabel>{key}: {task.content.message}</IonLabel>
+                </IonItem>))
           }
         </IonList>
       </IonContent>

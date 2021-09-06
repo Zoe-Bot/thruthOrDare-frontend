@@ -9,9 +9,7 @@ import {
   IonTabs,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, searchOutline, square, triangle } from 'ionicons/icons';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import { homeOutline, peopleOutline, personOutline, playOutline } from 'ionicons/icons';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,6 +32,9 @@ import './theme/variables.css';
 import BrowsePage from './pages/Browse';
 import SetPage from './pages/SetPage';
 import { AppContextProvider } from './state_management/State';
+import Profile from './pages/Profile';
+import PlayersPage from './pages/Players';
+import PlayPage from './pages/Play';
 
 const App: React.FC = () => (
   <AppContextProvider>
@@ -43,28 +44,29 @@ const App: React.FC = () => (
           <IonRouterOutlet>
             <Route exact path="/browse" component={BrowsePage} />
             <Route exact path="/set/:setId" component={SetPage} />
-            <Route exact path="/tab2">
-              <Tab2 />
-            </Route>
-            <Route path="/tab3">
-              <Tab3 />
-            </Route>
+            <Route path="/profile" component={Profile} />
+            <Route exact path="/players" component={PlayersPage} />
+            <Route path="/play" component={PlayPage} />
             <Route exact path="/">
               <Redirect to="/browse" />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="browse" href="/browse">
-              <IonIcon icon={searchOutline} />
+              <IonIcon icon={homeOutline} />
               <IonLabel>Browse</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab2" href="/tab2">
-              <IonIcon icon={ellipse} />
-              <IonLabel>Tab 2</IonLabel>
+            <IonTabButton tab="play" href="/play">
+              <IonIcon icon={playOutline} />
+              <IonLabel>Play</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
-              <IonIcon icon={square} />
-              <IonLabel>Tab 3</IonLabel>
+            <IonTabButton tab="player" href="/players">
+              <IonIcon icon={peopleOutline} />
+              <IonLabel>Players</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="profile" href="/profile">
+              <IonIcon icon={personOutline} />
+              <IonLabel>Profile</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>

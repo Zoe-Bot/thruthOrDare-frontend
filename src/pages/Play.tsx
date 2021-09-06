@@ -1,0 +1,27 @@
+import { IonContent, IonHeader, IonInput, IonItem, IonList, IonPage, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { useContext } from 'react';
+import ExploreContainer from '../components/SetCard';
+import { Player } from '../model/game';
+import { AppContext } from '../state_management/State';
+
+const PlayPage: React.FC = () => {
+  const { state, dispatch }: any = useContext(AppContext)
+
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Game</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>
+        <IonText><h5>Players from player menu</h5></IonText>
+        <IonList>
+          {state.currentGame.players.map((player: Player) => (<IonItem key={player.id}>{player.id} | {player.name} | {player.gender}</IonItem>))}
+        </IonList>
+      </IonContent>
+    </IonPage>
+  );
+};
+
+export default PlayPage;

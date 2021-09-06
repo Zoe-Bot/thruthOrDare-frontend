@@ -1,18 +1,56 @@
 import React, { createContext, useEffect, useReducer, useState } from "react";
+import { Gender, initialPlayers, Player } from "../model/game";
+import { GlobalState } from "../model/global";
 
 //@ts-ignore
 let AppContext = createContext()
 
-const initialState = {
-    count: 0
+const initialState: GlobalState = {
+    currentGame: {
+        players: initialPlayers
+    }
 }
 
 const persistedState = JSON.parse(window.localStorage.getItem("state") as any)
 
-let reducer = (state: any, action: any) => {
-    switch(action.type) {
-        case "setCount": {
-            return {...state, count: action.count}
+let reducer = (state: GlobalState, action: any): GlobalState => {
+    switch (action.type) {
+        case "CG_PLAYER_INIT": {
+            if (state.currentGame.players.length === 0) {
+                return { ...state, ...{ currentGame: { players: initialPlayers } } }
+            }
+            return state
+        }
+        case "CG_PLAYER_ADD": {
+            const newPlayer = {
+                ...action.data,
+                id: Math.max(...state.currentGame.players.map((player: Player) => player.id), 0) + 1
+            }
+            const players = [...state.currentGame.players, newPlayer]
+            return { ...state, ...{ currentGame: { players: players } } }
+        }
+        case "CG_PLAYER_UPDATE": {
+            const players = state.currentGame.players.map((player: Player) => {
+                if (player.id === action.data.id)
+                    return { ...player, ...action.data }
+                else
+                    return player
+            })
+            return { ...state, ...{ currentGame: { players: players } } }
+        }
+        case "CG_PLAYER_REMOVE": {
+            const players = state.currentGame.players.filter((player: Player) => {
+                return player.id !== action.data.id
+            })
+
+            return { ...state, ...{ currentGame: { players: players } } }
+        }
+        case "CG_PLAYER_REMOVE_EMPTY": {
+            const players = state.currentGame.players.filter((player: Player) => {
+                return player.name !== ""
+            })
+            
+            return { ...state, ...{ currentGame: { players: players } } }
         }
     }
     return state
@@ -24,12 +62,12 @@ function AppContextProvider(props: any) {
         ...persistedState
     }
 
-    let [state, dispatch] = useReducer(reducer, fullInitialState)
-    
+    let [state, dispatch]: [GlobalState, any] = useReducer(reducer, fullInitialState)
+
     useEffect(() => {
         window.localStorage.setItem('state', JSON.stringify(state))
     }, [state])
-    
+
     let value = { state, dispatch }
 
     return (
