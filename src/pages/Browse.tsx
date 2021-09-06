@@ -48,7 +48,7 @@ const BrowsePage: React.FC = () => {
                 <EmptyStateComponent text={"No Sets yet"}></EmptyStateComponent>
                 :
                 categorie.set.map((set: any) => (
-                  <IonItem routerLink={'set/' + set._id} key={set._id}>
+                  <IonItem routerLink={'/browse/set/' + set._id} key={set._id}>
                     <IonLabel>{set.name}</IonLabel>
                     <IonNote slot="end">{set.likes}</IonNote>
                   </IonItem>))}
@@ -68,7 +68,7 @@ const BrowsePage: React.FC = () => {
               <EmptyStateComponent text={"No Sets yet"}></EmptyStateComponent>
               :
               state.sets.items.map((set: any) => (
-                <IonItem routerLink={'set/' + set._id} key={set._id}>
+                <IonItem routerLink={'/browse/set/' + set._id} key={set._id}>
                   <IonLabel>{set.name}</IonLabel>
                   <IonNote slot="end">{set.likes}</IonNote>
                 </IonItem>))

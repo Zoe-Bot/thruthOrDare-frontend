@@ -42,11 +42,11 @@ const App: React.FC = () => (
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/browse" component={BrowsePage} />
-            <Route exact path="/set/:setId" component={SetPage} />
-            <Route path="/profile" component={Profile} />
-            <Route exact path="/players" component={PlayersPage} />
-            <Route path="/play" component={PlayPage} />
+            <Route exact path="/browse" render={() => <BrowsePage />} />
+            <Route exact path="/browse/set/:setId" component={SetPage} />
+            <Route path="/game" component={PlayPage} />
+            <Route path="/players" component={PlayersPage} />
+            <Route exact path="/profile" component={Profile} />
             <Route exact path="/">
               <Redirect to="/browse" />
             </Route>
@@ -56,11 +56,11 @@ const App: React.FC = () => (
               <IonIcon icon={homeOutline} />
               <IonLabel>Browse</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="play" href="/play">
+            <IonTabButton tab="game" href="/game">
               <IonIcon icon={playOutline} />
               <IonLabel>Play</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="player" href="/players">
+            <IonTabButton tab="players" href="/players">
               <IonIcon icon={peopleOutline} />
               <IonLabel>Players</IonLabel>
             </IonTabButton>

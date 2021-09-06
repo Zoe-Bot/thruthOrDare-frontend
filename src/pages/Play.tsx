@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonInput, IonItem, IonList, IonPage, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonInput, IonItem, IonList, IonPage, IonText, IonTitle, IonToolbar, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
 import { useContext } from 'react';
 import ExploreContainer from '../components/SetCard';
 import { Player } from '../model/game';
@@ -6,6 +6,11 @@ import { AppContext } from '../state_management/State';
 
 const PlayPage: React.FC = () => {
   const { state, dispatch }: any = useContext(AppContext)
+
+
+  useIonViewWillEnter(() => dispatch({
+    type: "CG_PLAYER_REMOVE_EMPTY"
+  }))
 
   return (
     <IonPage>

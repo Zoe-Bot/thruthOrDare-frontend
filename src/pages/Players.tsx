@@ -11,10 +11,6 @@ const PlayersPage: React.FC = () => {
         type: "CG_PLAYER_INIT"
     }))
 
-    useIonViewWillLeave(() => dispatch({
-        type: "CG_PLAYER_REMOVE_EMPTY"
-    }))
-
     return (
         <IonPage>
             <IonHeader>
