@@ -1,11 +1,13 @@
-import { IonBackButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonSpinner, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
-import { useState } from 'react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonSpinner, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
+import { useContext, useState } from 'react';
 import EmptyStateComponent from '../components/EmptyStateComponent';
 import { getSetById } from '../services/api';
 import { replaceWithIcon } from '../services/replaceGender';
+import { AppContext } from '../state_management/State';
 
 const SetPage: React.FC = (props: any) => {
   const [state, setState] = useState<any>({ isLoading: true, set: null })
+  const { globalState, dispatch }: any = useContext(AppContext)
 
   useIonViewDidEnter(async () => {
     const setId = props.match.params.setId
@@ -30,6 +32,7 @@ const SetPage: React.FC = (props: any) => {
         <p>set.daresCount: {state.set?.daresCount}</p>
         <p>set total count: {state.set?.daresCount + state.set?.truthCount}</p>
         <p>taskList.length: {state.set?.taskList.length}</p>
+        <IonButton expand="full" onClick={() => dispatch({type: "CG_SET_ADD", data: state.set})}>Play</IonButton>
         <IonList>
           {state.isLoading ?
             (<div className="ion-text-center ion-padding">

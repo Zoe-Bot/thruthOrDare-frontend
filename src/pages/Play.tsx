@@ -24,6 +24,8 @@ const PlayPage: React.FC = () => {
         <IonList>
           {state.currentGame.players.map((player: Player) => (<IonItem key={player.id}>{player.id} | {player.name} | {player.gender}</IonItem>))}
         </IonList>
+        <IonText><h5>Selected set: {state.currentGame?.set?.name}</h5></IonText>
+        <IonText><p>{JSON.stringify(state.currentGame?.set)}</p></IonText>
       </IonContent>
     </IonPage>
   );

@@ -7,6 +7,7 @@ let AppContext = createContext()
 
 const initialState: GlobalState = {
     currentGame: {
+        set: {},
         players: initialPlayers
     }
 }
@@ -17,7 +18,7 @@ let reducer = (state: GlobalState, action: any): GlobalState => {
     switch (action.type) {
         case "CG_PLAYER_INIT": {
             if (state.currentGame.players.length === 0) {
-                return { ...state, ...{ currentGame: { players: initialPlayers } } }
+                return { ...state, ...{ currentGame: { ...state.currentGame, players: initialPlayers } } }
             }
             return state
         }
@@ -27,7 +28,7 @@ let reducer = (state: GlobalState, action: any): GlobalState => {
                 id: Math.max(...state.currentGame.players.map((player: Player) => player.id), 0) + 1
             }
             const players = [...state.currentGame.players, newPlayer]
-            return { ...state, ...{ currentGame: { players: players } } }
+            return { ...state, ...{ currentGame: { ...state.currentGame, players: players } } }
         }
         case "CG_PLAYER_UPDATE": {
             const players = state.currentGame.players.map((player: Player) => {
@@ -36,21 +37,28 @@ let reducer = (state: GlobalState, action: any): GlobalState => {
                 else
                     return player
             })
-            return { ...state, ...{ currentGame: { players: players } } }
+            return { ...state, ...{ currentGame: { ...state.currentGame, players: players } } }
         }
         case "CG_PLAYER_REMOVE": {
             const players = state.currentGame.players.filter((player: Player) => {
                 return player.id !== action.data.id
             })
 
-            return { ...state, ...{ currentGame: { players: players } } }
+            return { ...state, ...{ currentGame: { ...state.currentGame, players: players } } }
         }
         case "CG_PLAYER_REMOVE_EMPTY": {
             const players = state.currentGame.players.filter((player: Player) => {
                 return player.name !== ""
             })
             
-            return { ...state, ...{ currentGame: { players: players } } }
+            return { ...state, ...{ currentGame: { ...state.currentGame, players: players } } }
+        }
+        
+        // Set
+        case "CG_SET_ADD": {
+            const set = action.data
+
+            return {...state, ...{ currentGame: { ...state.currentGame, set }}}
         }
     }
     return state

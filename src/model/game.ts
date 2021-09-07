@@ -4,6 +4,7 @@ export enum Gender {
 }
 
 export type CurrentGame = {
+    set: any,
     players: Player[]
 }
 
