@@ -51,8 +51,8 @@ const PlayPage: React.FC = () => {
                   {player.name}
                 </IonLabel>
               </IonItemDivider>
-              {player.tasks.length !== 0 ? player.tasks.map((gameTask: any) => (
-                <IonItem key={`gm_${gameTask.id}`}><IonLabel>{player.name}, {gameTask.message}</IonLabel></IonItem>
+              {player.tasks.length !== 0 ? player.tasks.map((gameTask: any, index:number) => (
+                <IonItem key={`gm_${gameTask.id}${index}`}><IonLabel>{player.name}, {gameTask.message}</IonLabel></IonItem>
               )) : (<EmptyStateComponent text={`${player.name} has no tasks this round`}> </EmptyStateComponent>)}
             </div>
           ))}
