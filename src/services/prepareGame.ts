@@ -70,7 +70,7 @@ function validateData(players: Player[], set: SetType) {
     if (!players)
         errors.push("Players are missing")
 
-    if (players.length < 2)
+    if (players.length < 2 || players.filter((player: Player) => player.name === "").length > 0)
         errors.push("Not enough Players")
 
     if (!set || Object.keys(set).length === 0)
