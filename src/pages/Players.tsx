@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonTitle, IonToggle, IonToolbar, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonTitle, IonToggle, IonToolbar, useIonViewDidEnter, useIonViewWillEnter, useIonViewWillLeave } from '@ionic/react';
 import { closeOutline, search } from 'ionicons/icons';
 import { useContext } from 'react';
 import { Gender, Player } from '../model/game';
@@ -7,7 +7,7 @@ import { AppContext } from '../state_management/State';
 const PlayersPage: React.FC = () => {
     const { state, dispatch }: any = useContext(AppContext)
 
-    useIonViewWillEnter(() => dispatch({
+    useIonViewDidEnter(() => dispatch({
         type: "CG_PLAYER_INIT"
     }))
 
