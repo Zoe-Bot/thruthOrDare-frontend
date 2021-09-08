@@ -60,6 +60,11 @@ let reducer = (state: GlobalState, action: any): GlobalState => {
 
             return {...state, ...{ currentGame: { ...state.currentGame, set }}}
         }
+
+        // General
+        case "APP_RESET": {
+            return {...initialState}
+        }
     }
     return state
 }

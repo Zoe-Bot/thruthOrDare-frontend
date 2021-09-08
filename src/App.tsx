@@ -37,6 +37,7 @@ import { AppContextProvider } from './state_management/State';
 import Profile from './pages/Profile';
 import PlayersPage from './pages/Players';
 import PlayPage from './pages/Play';
+import SettingsPage from './pages/SettingsPage';
 
 const App: React.FC = () => (
   <AppContextProvider>
@@ -49,6 +50,7 @@ const App: React.FC = () => (
             <Route path="/game" component={PlayPage} />
             <Route path="/players" component={PlayersPage} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/profile/settings" component={SettingsPage} />
             <Route exact path="/">
               <Redirect to="/browse" />
             </Route>
