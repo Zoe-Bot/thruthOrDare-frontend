@@ -1,16 +1,15 @@
-import { maleFemale } from "ionicons/icons";
 import { CurrentPlayerGender, Gender, Player, SetType, TaskType } from "../model/game";
 
 const maleCountSymbol = "@m"
 const femaleCountSymbol = "@f"
 const anyoneCountSymbol = "@a"
 
-export function generatePossibleQuestions(players: Player[], set: SetType) {
+export function generatePossibleQuestions(players: Player[], set: SetType): [Player[] | null, TaskType[] | null, string[] | null] {
     const errors = validateData(players, set)
     const notPossibleTasks: TaskType[] = []
 
     if (errors.length)
-        return errors
+        return [null, null, errors]
 
     let newPlayerState: Player[] = [...players]
     newPlayerState = newPlayerState.map((player: Player) => {
@@ -53,12 +52,15 @@ export function generatePossibleQuestions(players: Player[], set: SetType) {
             const playerWhoGetsTask = newPlayerState.find((player: Player) => player.id === playerIdWhoGetsTask)
             playerWhoGetsTask?.tasks.push(gameTask)
 
-        } catch(error) {
-            notPossibleTasks.push(task)
+        } catch(error: any) {
+            if(error.name === "NoMorePlayersException")
+                notPossibleTasks.push(task)
+            else
+                console.error(error.name, error.message)
         }
     })
     
-    return [newPlayerState, notPossibleTasks]
+    return [newPlayerState, notPossibleTasks, null]
 }
 
 
@@ -71,10 +73,10 @@ function validateData(players: Player[], set: SetType) {
     if (players.length < 2)
         errors.push("Not enough Players")
 
-    if (!set)
+    if (!set || Object.keys(set).length === 0)
         errors.push("Set is missing")
 
-    if (set.taskList.length === 0)
+    if (set.taskList?.length === 0)
         errors.push("Not enough Tasks")
 
     return errors
@@ -86,7 +88,7 @@ class CachePlayers {
 
     getRandomAnyone(): Player {
         if (this.players.length === 0)
-            throw "NoMorePlayersException"
+            throw new NoMorePlayersException()
 
         const playerIndex = this.getRandomIndex(this.players)
         const [ player ] = this.players.splice(playerIndex, 1)
@@ -105,7 +107,7 @@ class CachePlayers {
         const players = this.players.filter((player: Player) => player.gender === gender)
        
         if (players.length === 0)
-            throw "NoMorePlayersException"
+            throw new NoMorePlayersException()
 
         const randomPlayer = players[this.getRandomIndex(players)]
         const playerIndex = this.players.findIndex((player: Player) => player.id === randomPlayer.id)
@@ -120,5 +122,8 @@ class CachePlayers {
     private getRandomIndex(array: Player[]): number {
         return Math.floor(Math.random() * array.length)
     }
+}
 
+class NoMorePlayersException {  
+    constructor(public message = "No more players", public name = "NoMorePlayersException") {}
 }
