@@ -29,6 +29,8 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './theme/sass/custom.scss'
+
 import BrowsePage from './pages/Browse';
 import SetPage from './pages/SetPage';
 import { AppContextProvider } from './state_management/State';
