@@ -2,7 +2,7 @@ import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, I
 import { useContext, useState } from 'react';
 import EmptyStateComponent from '../components/EmptyStateComponent';
 import { getSetById } from '../services/api';
-import { replaceWithIcon } from '../services/replaceGender';
+import { replaceStringWithIcon } from '../services/replaceGender';
 import { AppContext } from '../state_management/State';
 
 const SetPage: React.FC = (props: any) => {
@@ -12,7 +12,6 @@ const SetPage: React.FC = (props: any) => {
   useIonViewDidEnter(async () => {
     const setId = props.match.params.setId
     const result = await getSetById(setId)
-    replaceWithIcon(result.taskList)
 
     setState({ isLoading: false, set: result })
   })
@@ -43,7 +42,7 @@ const SetPage: React.FC = (props: any) => {
               :
               state.set.taskList.map((task: any, key: number) => (
                 <IonItem key={key}>
-                  <IonLabel>{key}: {task.content.message}</IonLabel>
+                  <IonLabel>{key}: {replaceStringWithIcon(task.content.message)}</IonLabel>
                 </IonItem>))
           }
         </IonList>
