@@ -1,4 +1,4 @@
-import { CurrentPlayerGender, Gender, Player, SetType, TaskType } from "../model/game";
+import { CurrentPlayerGender, Gender, Player, SetType, TaskEnum, TaskType } from "../model/game";
 
 const maleCountSymbol = "@m"
 const femaleCountSymbol = "@f"
@@ -20,7 +20,8 @@ export function generatePossibleQuestions(players: Player[], set: SetType): [Pla
         try {
             const gameTask = {
                 id: task._id,
-                message: task.content.message
+                message: task.content.message,
+                type: task.type
             }
             const cachePlayer = new CachePlayers([...players])
             let playerIdWhoGetsTask: number = -1

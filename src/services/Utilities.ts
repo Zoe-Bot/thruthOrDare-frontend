@@ -1,3 +1,5 @@
+import { TaskEnum } from "../model/game"
+
 export function replaceArrayWithIcon(taskListArray: any[]) {
     taskListArray.map((task: any) => {
         task.content.message = replaceStringWithIcon(task.content.message)
@@ -18,4 +20,8 @@ export function replaceCurrentPlayerStringWithIcon(string: string): string {
     .replaceAll('@ca', '👤')
     .replaceAll('@cm', '👨')
     .replaceAll('@cf', '👩')
+}
+
+export function taskEnumToString(taskEnum: TaskEnum) {
+    return taskEnum === TaskEnum.TRUTH ? "Wahrheit" : "Pflicht"
 }

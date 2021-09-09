@@ -2,7 +2,7 @@ import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, I
 import { useContext, useState } from 'react';
 import EmptyStateComponent from '../components/EmptyStateComponent';
 import { getSetById } from '../services/api';
-import { replaceStringWithIcon } from '../services/replaceGender';
+import { replaceStringWithIcon } from '../services/Utilities';
 import { AppContext } from '../state_management/State';
 
 const SetPage: React.FC = (props: any) => {

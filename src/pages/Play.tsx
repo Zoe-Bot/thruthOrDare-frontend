@@ -1,10 +1,10 @@
-import { IonChip, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonPage, IonText, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
+import { IonButton, IonChip, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonListHeader, IonPage, IonText, IonTitle, IonToolbar, useIonViewDidEnter } from '@ionic/react';
 import { useContext, useState } from 'react';
 import EmptyStateComponent from '../components/EmptyStateComponent';
 import ExploreContainer from '../components/SetCard';
 import { Player } from '../model/game';
 import { generatePossibleQuestions } from '../services/prepareGame';
-import { replaceCurrentPlayerStringWithIcon, replaceStringWithIcon } from '../services/replaceGender';
+import { replaceCurrentPlayerStringWithIcon, replaceStringWithIcon, taskEnumToString } from '../services/Utilities';
 import { AppContext } from '../state_management/State';
 
 const PlayPage: React.FC = () => {
@@ -20,7 +20,7 @@ const PlayPage: React.FC = () => {
     console.log(_possibleTasks, _notPossibleTasks, _errors)
     setPossibleTasks(_possibleTasks)
     setNotPossibleTasks(_notPossibleTasks)
-    if(_errors)
+    if (_errors)
       setErrors(_errors)
     else
       setErrors([]) // Reset erros if there are fixed
@@ -34,10 +34,15 @@ const PlayPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        {erorrs.length === 0 && <IonButton expand="full" routerLink="/game/choose">Play</IonButton>}
+        {state.currentGame.set?.name ?
+          (<p>Current set: {state.currentGame.set.name}</p>)
+          :
+          (<p>Select set</p>)}
         {erorrs.map((error: string, index: number) => (
-        <IonChip key={`err_${index}`} color="danger">
-          <IonLabel>{error}</IonLabel>
-        </IonChip>))}
+          <IonChip key={`err_${index}`} color="danger">
+            <IonLabel>{error}</IonLabel>
+          </IonChip>))}
         <IonListHeader><h3>Players from player menu</h3></IonListHeader>
         <IonList>
           {state.currentGame.players.map((player: Player) => (<IonItem key={`pl_${player.id}`}>{player.id} | {player.name} | {player.gender}</IonItem>))}
@@ -51,8 +56,8 @@ const PlayPage: React.FC = () => {
                   {player.name}
                 </IonLabel>
               </IonItemDivider>
-              {player.tasks.length !== 0 ? player.tasks.map((gameTask: any, index:number) => (
-                <IonItem key={`gm_${gameTask.id}${index}`}><IonLabel>{player.name}, {gameTask.message}</IonLabel></IonItem>
+              {player.tasks.length !== 0 ? player.tasks.map((gameTask: any, index: number) => (
+                <IonItem key={`gm_${gameTask.id}${index}`}><IonLabel>{taskEnumToString(gameTask.type)}: {player.name}, {gameTask.message}</IonLabel></IonItem>
               )) : (<EmptyStateComponent text={`${player.name} has no tasks this round`}> </EmptyStateComponent>)}
             </div>
           ))}
@@ -61,7 +66,7 @@ const PlayPage: React.FC = () => {
         <IonList>
           {notPossibleTasks && notPossibleTasks.map((task: any, index: number) => (
             <IonItem key={"notpo_" + task._id + "" + index}>
-              {replaceCurrentPlayerStringWithIcon(task.content.currentPlayerGender)}, {replaceStringWithIcon(task.content.message)}
+              {taskEnumToString(task.type)}: {replaceCurrentPlayerStringWithIcon(task.content.currentPlayerGender)}, {replaceStringWithIcon(task.content.message)}
             </IonItem>
           ))}
         </IonList>
