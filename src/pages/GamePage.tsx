@@ -1,11 +1,11 @@
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { ellipsisHorizontal, ellipsisVertical, personCircle, search, settings } from 'ionicons/icons';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../state_management/State';
 
-const GameChoose: React.FC = () => {
+const GamePage: React.FC = () => {
     const { state, dispatch }: any = useContext(AppContext)
-
+    const [isTask, setIsTask] = useState(false)
     const onClickTruth = () => {
         console.log("truth")
     }
@@ -24,14 +24,18 @@ const GameChoose: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <h3>Michael</h3>
-                <p>Du bist dran!</p>
-                <IonButton color="danger" expand="full" onClick={() => onClickTruth()}>Truth</IonButton>
-                <IonButton color="warning" expand="full" onClick={() => onClickDare()}>Dare</IonButton>
-                <IonButton routerLink="/game/task">DEVELOPER: VIEW TASK</IonButton>
+                { !isTask ? (<>
+                    <h3>Michael</h3>
+                    <p>Du bist dran!</p>
+                    <IonButton color="danger" expand="full" onClick={() => onClickTruth()}>Truth</IonButton>
+                    <IonButton color="warning" expand="full" onClick={() => onClickDare()}>Dare</IonButton>
+                    <IonButton onClick={() => setIsTask(true)}>DEVELOPER: VIEW TASK</IonButton>
+                </>) : (<> <h1>Truth</h1>
+                    <h3>Michael, gib dein Handy Joy. Joy darf nun etwas in deine Insta Sotry posten.</h3>
+                    <IonButton onClick={() => setIsTask(false)}>Continue</IonButton></>)}
             </IonContent>
         </IonPage>
     );
 };
 
-export default GameChoose;
+export default GamePage;

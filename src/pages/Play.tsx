@@ -34,7 +34,7 @@ const PlayPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        {erorrs.length === 0 && <IonButton expand="full" routerLink="/game/choose">Play</IonButton>}
+        {erorrs.length === 0 && <IonButton expand="full" routerLink="/game/play">Play</IonButton>}
         {state.currentGame.set?.name ?
           (<p>Current set: {state.currentGame.set.name}</p>)
           :

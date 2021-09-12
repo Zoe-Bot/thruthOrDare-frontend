@@ -38,8 +38,7 @@ import Profile from './pages/Profile';
 import PlayersPage from './pages/Players';
 import PlayPage from './pages/Play';
 import SettingsPage from './pages/SettingsPage';
-import GameChoose from './pages/GameChoose';
-import GameTask from './pages/GameTask';
+import GamePage from './pages/GamePage';
 
 const App: React.FC = () => (
   <AppContextProvider>
@@ -50,8 +49,7 @@ const App: React.FC = () => (
             <Route exact path="/browse" render={() => <BrowsePage />} />
             <Route exact path="/browse/set/:setId" component={SetPage} />
             <Route exact path="/game" component={PlayPage} />
-            <Route exact path="/game/choose" component={GameChoose} />
-            <Route exact path="/game/task" component={GameTask} />
+            <Route exact path="/game/play" component={GamePage} />
             <Route exact path="/players" component={PlayersPage} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/profile/settings" component={SettingsPage} />
