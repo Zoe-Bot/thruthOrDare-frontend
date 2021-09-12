@@ -1,11 +1,12 @@
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { ellipsisHorizontal, ellipsisVertical, personCircle, search, settings } from 'ionicons/icons';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { getNextPlayer } from '../services/Game';
 import { AppContext } from '../state_management/State';
 
 const GamePage: React.FC = () => {
     const { state, dispatch }: any = useContext(AppContext)
-    const [isTask, setIsTask] = useState(false)
+    const [ isTask, setIsTask ] = useState(false)
     const onClickTruth = () => {
         console.log("truth")
     }
@@ -13,6 +14,9 @@ const GamePage: React.FC = () => {
     const onClickDare = () => {
         console.log("dare")
     }
+    useEffect(() => {
+        console.log(getNextPlayer())
+    }, [isTask])
     return (
         <IonPage>
             <IonHeader>
