@@ -26,3 +26,6 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+#readme to avoid conflicts with readme in gitlab mirror
+README.md
